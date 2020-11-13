@@ -1,8 +1,8 @@
 # GA4React
 
-### Google Analytics 4 React
+## Google Analytics 4 React
 
-Example
+Example without components
 
 ```
 
@@ -15,3 +15,24 @@ ga4react.initialize().then((ga4) => {
 })
 
 ```
+
+---
+
+## Inject GA4React function in props of childrens
+
+Example with custom components 'GA4R'
+
+```
+const Test: React.FC<any> = ({ ga4 }) => {
+  return <>{"=> " + JSON.stringify(ga4)}</>;
+};
+
+
+<GA4R code="CODICE">
+    <Test></Test>
+</GA4R>
+```
+
+## RENDER:
+
+`=> {...}`

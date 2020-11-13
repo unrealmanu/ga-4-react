@@ -7,8 +7,10 @@ declare global {
 /**
  * @interface
  */
-export interface GA4ReactInterface {
+export interface GA4ReactInterface extends GA4ReactResolveInterface {
   initialize(): Promise<any>;
+}
+export interface GA4ReactResolveInterface {
   pageview(path: string): void;
   gtag(...args: any): any;
 }
@@ -26,7 +28,7 @@ export class GA4React implements GA4ReactInterface {
     this.config = config || {};
     this.gaCode = gaCode;
   }
-  initialize(): Promise<GA4ReactInterface> {
+  public initialize(): Promise<GA4ReactResolveInterface> {
     return new Promise((resolve, reject) => {
       const head: HTMLHeadElement = document.getElementsByTagName('head')[0];
       const scriptAsync: HTMLScriptElement = document.createElement('script');
@@ -39,10 +41,10 @@ export class GA4React implements GA4ReactInterface {
         const scriptSync: HTMLScriptElement = document.createElement('script');
 
         let scriptHTML: string = `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${this.gaCode}', ${JSON.stringify(this.config)});`;
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${this.gaCode}', ${JSON.stringify(this.config)});`;
 
         if (this.additionalGaCode) {
           this.additionalGaCode.forEach((code: string) => {
@@ -53,7 +55,7 @@ export class GA4React implements GA4ReactInterface {
         scriptSync.innerHTML = scriptHTML;
 
         head.appendChild(scriptSync);
-        resolve(this);
+        resolve({ pageview: this.pageview, gtag: this.gtag });
       };
 
       scriptAsync.onerror = (err: any) => {
@@ -68,7 +70,7 @@ export class GA4React implements GA4ReactInterface {
    * @desc set new page or send pageview event
    * @param path
    */
-  pageview(path: string): void {
+  public pageview(path: string): void {
     window.gtag('event', 'page_view', {
       page_path: path,
       page_location: window.location,
@@ -80,7 +82,7 @@ export class GA4React implements GA4ReactInterface {
    * @desc direct access to gtag
    * @param args
    */
-  gtag(...args: any): any {
+  public gtag(...args: any): any {
     return window.gtag(args);
   }
 }
