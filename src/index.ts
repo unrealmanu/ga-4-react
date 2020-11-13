@@ -26,7 +26,7 @@ export class GA4React implements GA4ReactInterface {
     this.config = config || {};
     this.gaCode = gaCode;
   }
-  initialize(): Promise<any> {
+  initialize(): Promise<GA4ReactInterface> {
     return new Promise((resolve, reject) => {
       const head: HTMLHeadElement = document.getElementsByTagName('head')[0];
       const scriptAsync: HTMLScriptElement = document.createElement('script');
