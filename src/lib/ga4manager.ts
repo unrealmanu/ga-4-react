@@ -1,18 +1,14 @@
+import {
+  ga4Config,
+  GA4ReactInterface,
+  GA4ReactResolveInterface,
+  gtagFunction,
+} from './gtagModels';
+
 declare global {
   interface Window {
-    gtag: Function;
+    gtag: gtagFunction | Function;
   }
-}
-
-/**
- * @interface
- */
-export interface GA4ReactInterface extends GA4ReactResolveInterface {
-  initialize(): Promise<any>;
-}
-export interface GA4ReactResolveInterface {
-  pageview(path: string): void;
-  gtag(...args: any): any;
 }
 
 /**
@@ -22,12 +18,17 @@ export interface GA4ReactResolveInterface {
 export class GA4React implements GA4ReactInterface {
   constructor(
     private gaCode: string,
-    private config?: object,
+    private config?: ga4Config | object,
     private additionalGaCode?: Array<string>
   ) {
     this.config = config || {};
     this.gaCode = gaCode;
   }
+
+  /**
+   * @desc Return main function for send ga4 events, pageview etc
+   * @returns {Promise<GA4ReactResolveInterface>}
+   */
   public initialize(): Promise<GA4ReactResolveInterface> {
     return new Promise((resolve, reject) => {
       const head: HTMLHeadElement = document.getElementsByTagName('head')[0];
@@ -83,6 +84,7 @@ export class GA4React implements GA4ReactInterface {
    * @param args
    */
   public gtag(...args: any): any {
+    //@ts-ignore
     return window.gtag(args);
   }
 }
