@@ -1,4 +1,7 @@
-# GA4React
+# GA4React - Google Analytics 4 React
+
+Simple wrapper of ga4 scripts for React:
+https://developers.google.com/analytics/devguides/collection/ga4
 
 ## Google Analytics 4 React
 
@@ -28,11 +31,18 @@ const Test: React.FC<any> = ({ ga4 }) => {
 };
 
 
-<GA4R code="CODICE">
+<GA4R code="YOUR GA CODE">
     <Test></Test>
 </GA4R>
 ```
 
 ## RENDER:
 
+console log results:
+
 `{pageview: ƒ, gtag: ƒ}`
+
+
+
+
+<a href="https://www.buymeacoffee.com/unrealmanu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
