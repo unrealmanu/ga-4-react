@@ -24,7 +24,7 @@ Example with custom components 'GA4R'
 
 ```
 const Test: React.FC<any> = ({ ga4 }) => {
-  return <>{"=> " + JSON.stringify(ga4)}</>;
+  return <>{ga4 && console.log(ga4)}</>;
 };
 
 
@@ -35,4 +35,4 @@ const Test: React.FC<any> = ({ ga4 }) => {
 
 ## RENDER:
 
-`=> {...}`
+`{pageview: ƒ, gtag: ƒ}`

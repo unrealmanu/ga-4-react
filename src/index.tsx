@@ -19,13 +19,20 @@ export const GA4R: React.FC<IGA4R> = ({
   additionalCode,
   children,
 }) => {
-  const [ga4fn, setGA4Fn] = useState<any>();
+  const [components, setComponents] = useState<any>(children);
 
   useEffect(() => {
     const ga4manager = new GA4React(`${code}`, config, additionalCode);
     ga4manager.initialize().then(
       ga4 => {
-        setGA4Fn(ga4);
+        setComponents(
+          React.Children.map(children, (child, index) => {
+            return React.cloneElement(child, {
+              ga4: ga4,
+              index,
+            });
+          })
+        );
       },
       err => {
         console.error(err);
@@ -33,14 +40,7 @@ export const GA4R: React.FC<IGA4R> = ({
     );
   }, []);
 
-  const childrenWithProps = React.Children.map(children, (child, index) => {
-    return React.cloneElement(child, {
-      ga4: ga4fn,
-      index,
-    });
-  });
-
-  return <div>{childrenWithProps}</div>;
+  return <>{components}</>;
 };
 
 export default GA4React;
