@@ -64,4 +64,5 @@ export interface GA4ReactResolveInterface {
  */
 export interface ga4Config {
   send_page_view: boolean;
+  groups: string;
 }

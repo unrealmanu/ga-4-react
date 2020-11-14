@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import GA4React from '..';
-
-export interface IGAReactConfig {
-  send_page_view: boolean;
-  groups: string;
-}
+import { ga4Config } from '../lib/gtagModels';
 
 export interface IGA4R {
   code: string;
-  config?: IGAReactConfig;
+  config?: ga4Config | object;
   additionalCode?: Array<string>;
   children?: any;
 }
