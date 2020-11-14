@@ -31,7 +31,8 @@ export interface gtagPageView {
 export type gtagFunction = (
   event: gtagEvent,
   action: gtagAction,
-  data: gtagEventConfig | gtagPageView | object
+  data: gtagEventConfig | gtagPageView | object,
+  nonInteraction?: boolean
 ) => {};
 
 /**
@@ -47,7 +48,13 @@ export interface GA4ReactInterface extends GA4ReactResolveInterface {
  * @interface GA4ReactResolveInterface
  */
 export interface GA4ReactResolveInterface {
-  pageview(path: string): void;
+  pageview(path: string): any;
+  event(
+    action: gtagAction,
+    label: gtagLabel,
+    data: gtagCategory,
+    nonInteraction?: boolean
+  ): any;
   gtag(...args: any): any;
 }
 

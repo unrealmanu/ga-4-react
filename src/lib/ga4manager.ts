@@ -2,7 +2,10 @@ import {
   ga4Config,
   GA4ReactInterface,
   GA4ReactResolveInterface,
+  gtagAction,
+  gtagCategory,
   gtagFunction,
+  gtagLabel,
 } from './gtagModels';
 
 declare global {
@@ -56,7 +59,11 @@ export class GA4React implements GA4ReactInterface {
         scriptSync.innerHTML = scriptHTML;
 
         head.appendChild(scriptSync);
-        resolve({ pageview: this.pageview, gtag: this.gtag });
+        resolve({
+          pageview: this.pageview,
+          event: this.event,
+          gtag: this.gtag,
+        });
       };
 
       scriptAsync.onerror = (err: any) => {
@@ -68,14 +75,34 @@ export class GA4React implements GA4ReactInterface {
   }
 
   /**
-   * @desc set new page or send pageview event
+   * @desc send pageview event to gtag
    * @param path
    */
-  public pageview(path: string): void {
-    window.gtag('event', 'page_view', {
+  public pageview(path: string): any {
+    return this.gtag('event', 'page_view', {
       page_path: path,
       page_location: window.location,
       page_title: document.title,
+    });
+  }
+
+  /**
+   * @desc set event and send to gtag
+   * @param action
+   * @param label
+   * @param category
+   * @param nonInteraction
+   */
+  public event(
+    action: gtagAction,
+    label: gtagLabel,
+    category: gtagCategory,
+    nonInteraction: boolean = false
+  ): any {
+    return this.gtag('event', action, {
+      event_label: label,
+      event_category: category,
+      non_interaction: nonInteraction,
     });
   }
 
@@ -85,7 +112,7 @@ export class GA4React implements GA4ReactInterface {
    */
   public gtag(...args: any): any {
     //@ts-ignore
-    return window.gtag(args);
+    return window.gtag(...args);
   }
 }
 
