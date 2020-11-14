@@ -1,18 +1,17 @@
+import {
+  ga4Config,
+  GA4ReactInterface,
+  GA4ReactResolveInterface,
+  gtagAction,
+  gtagCategory,
+  gtagFunction,
+  gtagLabel,
+} from './gtagModels';
+
 declare global {
   interface Window {
-    gtag: Function;
+    gtag: gtagFunction | Function;
   }
-}
-
-/**
- * @interface
- */
-export interface GA4ReactInterface extends GA4ReactResolveInterface {
-  initialize(): Promise<any>;
-}
-export interface GA4ReactResolveInterface {
-  pageview(path: string): void;
-  gtag(...args: any): any;
 }
 
 /**
@@ -22,12 +21,17 @@ export interface GA4ReactResolveInterface {
 export class GA4React implements GA4ReactInterface {
   constructor(
     private gaCode: string,
-    private config?: object,
+    private config?: ga4Config | object,
     private additionalGaCode?: Array<string>
   ) {
     this.config = config || {};
     this.gaCode = gaCode;
   }
+
+  /**
+   * @desc Return main function for send ga4 events, pageview etc
+   * @returns {Promise<GA4ReactResolveInterface>}
+   */
   public initialize(): Promise<GA4ReactResolveInterface> {
     return new Promise((resolve, reject) => {
       const head: HTMLHeadElement = document.getElementsByTagName('head')[0];
@@ -55,7 +59,11 @@ export class GA4React implements GA4ReactInterface {
         scriptSync.innerHTML = scriptHTML;
 
         head.appendChild(scriptSync);
-        resolve({ pageview: this.pageview, gtag: this.gtag });
+        resolve({
+          pageview: this.pageview,
+          event: this.event,
+          gtag: this.gtag,
+        });
       };
 
       scriptAsync.onerror = (err: any) => {
@@ -67,14 +75,34 @@ export class GA4React implements GA4ReactInterface {
   }
 
   /**
-   * @desc set new page or send pageview event
+   * @desc send pageview event to gtag
    * @param path
    */
-  public pageview(path: string): void {
-    window.gtag('event', 'page_view', {
+  public pageview(path: string): any {
+    return this.gtag('event', 'page_view', {
       page_path: path,
       page_location: window.location,
       page_title: document.title,
+    });
+  }
+
+  /**
+   * @desc set event and send to gtag
+   * @param action
+   * @param label
+   * @param category
+   * @param nonInteraction
+   */
+  public event(
+    action: gtagAction,
+    label: gtagLabel,
+    category: gtagCategory,
+    nonInteraction: boolean = false
+  ): any {
+    return this.gtag('event', action, {
+      event_label: label,
+      event_category: category,
+      non_interaction: nonInteraction,
     });
   }
 
@@ -83,7 +111,8 @@ export class GA4React implements GA4ReactInterface {
    * @param args
    */
   public gtag(...args: any): any {
-    return window.gtag(args);
+    //@ts-ignore
+    return window.gtag(...args);
   }
 }
 

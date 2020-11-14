@@ -1,46 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import GA4React from './ga4manager';
+import GA4React from './lib/ga4manager';
 
-export interface IGAReactConfig {
-  send_page_view: boolean;
-  groups: string;
-}
+import GA4RComponents from './components/GA4RComponents';
 
-export interface IGA4R {
-  code: string;
-  config?: IGAReactConfig;
-  additionalCode?: Array<string>;
-  children?: any;
-}
-
-export const GA4R: React.FC<IGA4R> = ({
-  code,
-  config,
-  additionalCode,
-  children,
-}) => {
-  const [components, setComponents] = useState<any>(children);
-
-  useEffect(() => {
-    const ga4manager = new GA4React(`${code}`, config, additionalCode);
-    ga4manager.initialize().then(
-      ga4 => {
-        setComponents(
-          React.Children.map(children, (child, index) => {
-            return React.cloneElement(child, {
-              ga4: ga4,
-              index,
-            });
-          })
-        );
-      },
-      err => {
-        console.error(err);
-      }
-    );
-  }, []);
-
-  return <>{components}</>;
-};
+export const GA4R: typeof GA4RComponents = GA4RComponents;
 
 export default GA4React;

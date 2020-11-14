@@ -33,6 +33,7 @@
   },
   "name": "ga-4-react",
   "author": "manueltrebbi",
+  "repository": "https://github.com/unrealmanu/ga-4-react",
   "module": "dist/ga-4-react.esm.js",
   "size-limit": [
     {
