@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import GA4React from '..';
+import GA4React from './../lib/ga4manager';
 import { GA4ReactResolveInterface } from '../lib/gtagModels';
 
 export interface IGAReactConfig {
@@ -26,7 +26,6 @@ export const GA4R: React.FC<IGA4R> = ({
     const ga4manager = new GA4React(`${code}`, config, additionalCode);
     ga4manager.initialize().then(
       (ga4: GA4ReactResolveInterface) => {
-        console.log('yy', ga4);
         setComponents(
           React.Children.map(children, (child: React.ReactChildren, index) => {
             if (!React.isValidElement(child)) {

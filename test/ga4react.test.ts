@@ -1,5 +1,6 @@
 import { JSDOM } from 'jsdom';
-import { GA4React, GA4ReactInterface } from './../dist/index';
+import { GA4ReactInterface } from '../dist/lib/gtagModels';
+import GA4React from '../dist/index'
 
 const { window } = new JSDOM(
   `<!DOCTYPE html><html><head></head><body></body></html>`,
