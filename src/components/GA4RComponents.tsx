@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GA4React from '..';
-adimport { GA4ReactResolveInterface } from '../lib/gtagModels';
+import { GA4ReactResolveInterface } from '../lib/gtagModels';
 
 export interface IGAReactConfig {
   send_page_view: boolean;
