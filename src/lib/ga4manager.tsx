@@ -11,6 +11,7 @@ import {
 declare global {
   interface Window {
     gtag: gtagFunction | Function;
+    ga: Function;
   }
 }
 
@@ -59,12 +60,18 @@ export class GA4React implements GA4ReactInterface {
         scriptSync.innerHTML = scriptHTML;
 
         head.appendChild(scriptSync);
-        resolve({
+
+        const resolved = {
           pageview: this.pageview,
           event: this.event,
           gtag: this.gtag,
-          ga: this.ga,
-        });
+        };
+
+        if (window.ga) {
+          Object.assign(resolved, { ga: this.ga });
+        }
+
+        resolve(resolved);
       };
 
       scriptAsync.onerror = (err: any) => {
