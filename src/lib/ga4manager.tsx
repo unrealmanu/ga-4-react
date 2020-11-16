@@ -63,6 +63,7 @@ export class GA4React implements GA4ReactInterface {
           pageview: this.pageview,
           event: this.event,
           gtag: this.gtag,
+          ga: this.ga,
         });
       };
 
@@ -104,6 +105,15 @@ export class GA4React implements GA4ReactInterface {
       event_category: category,
       non_interaction: nonInteraction,
     });
+  }
+
+  /**
+   * @desc direct access to ga
+   * @param args
+   */
+  public ga(...args: any): any {
+    //@ts-ignore
+    return window.ga(...args);
   }
 
   /**

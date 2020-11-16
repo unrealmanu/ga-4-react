@@ -56,6 +56,7 @@ export interface GA4ReactResolveInterface {
     nonInteraction?: boolean
   ): any;
   gtag(...args: any): any;
+  ga(...args: any): any;
 }
 
 /**
