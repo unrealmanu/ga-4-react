@@ -20,12 +20,13 @@ export const GA4R: React.FC<IGA4R> = ({
   additionalCode,
   children,
 }) => {
-  const [components, setComponents] = useState<any>(children);
+  const [components, setComponents] = useState<any>(null);
 
   useEffect(() => {
     const ga4manager = new GA4React(`${code}`, config, additionalCode);
     ga4manager.initialize().then(
       (ga4: GA4ReactResolveInterface) => {
+        console.log('yy', ga4);
         setComponents(
           React.Children.map(children, (child: React.ReactChildren, index) => {
             if (!React.isValidElement(child)) {
