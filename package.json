@@ -17,12 +17,13 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "tsc-check": "./node_modules/typescript/bin/tsc -p ./tsconfig.json"
   },
   "peerDependencies": {},
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "npm run lint && npm run test && npm run tsc-check"
     }
   },
   "prettier": {
