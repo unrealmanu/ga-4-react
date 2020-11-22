@@ -27,6 +27,15 @@ export class GA4React implements GA4ReactInterface {
   ) {
     this.config = config || {};
     this.gaCode = gaCode;
+    this.initialiedCorrectly = undefined;
+  }
+
+  private outputOnResolve(): GA4ReactResolveInterface {
+    return {
+      pageview: this.pageview,
+      event: this.event,
+      gtag: this.gtag,
+    };
   }
 
   /**
@@ -61,16 +70,11 @@ export class GA4React implements GA4ReactInterface {
 
         head.appendChild(scriptSync);
 
-        const resolved = {
-          pageview: this.pageview,
-          event: this.event,
-          gtag: this.gtag,
-        };
+        const resolved: GA4ReactResolveInterface = this.outputOnResolve();
 
         if (window.ga) {
           Object.assign(resolved, { ga: this.ga });
         }
-
         resolve(resolved);
       };
 
@@ -130,6 +134,18 @@ export class GA4React implements GA4ReactInterface {
   public gtag(...args: any): any {
     //@ts-ignore
     return window.gtag(...args);
+  }
+
+  /**
+   * @desc ga is initialized?
+   */
+  static isInitialized(): boolean {
+    switch (typeof window.gtag === 'function') {
+      case true:
+        return true;
+      default:
+        return false;
+    }
   }
 }
 

@@ -1,7 +1,7 @@
+import GA4R from 'ga-4-react/dist/components/GA4RComponents';
+import { GA4ReactResolveInterface } from 'ga-4-react/dist/lib/gtagModels';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { GA4ReactResolveInterface } from '../lib/gtagModels';
-import GA4R from './../components/GA4RComponents';
 
 export const ExampleChild: React.FC<{
   ga4?: GA4ReactResolveInterface;

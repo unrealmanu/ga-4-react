@@ -1,23 +1,26 @@
-
+/**
+ * x Manuel
+ * TODO update
+ */
 
 /**
  * Originally from ReactGA Community Wiki Page https://github.com/react-ga/react-ga/wiki/React-Router-v4-withTracker (Implemented for ga-4-react by Cristian Custodio)
  */
- 
- //Create a new file called withTracker.jsx and insert your ga-code
-import React, { Component } from "react";
-import GA4React from "ga-4-react";
 
-const ga4react = new GA4React("INSERT GA-CODE HERE");
+//Create a new file called withTracker.jsx and insert your ga-code
+import React, { Component } from 'react';
+import GA4React from 'ga-4-react';
+
+const ga4react = new GA4React('INSERT GA-CODE HERE');
 
 export default function withTracker(WrappedComponent) {
-  const trackPage = (page) => {
+  const trackPage = page => {
     ga4react.initialize().then(
-      (ga4) => {
+      ga4 => {
         ga4.pageview(page);
-        ga4.gtag("event", "pageview", "path"); // or your custom gtag event
+        ga4.gtag('event', 'pageview', 'path'); // or your custom gtag event
       },
-      (err) => {
+      err => {
         console.error(err);
       }
     );
@@ -46,14 +49,12 @@ export default function withTracker(WrappedComponent) {
   return HOC;
 }
 
-
 //Implement in react-router page
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import Home from "../Pages/Home";
-import NotFound from "../Pages/NotFound";
-import withTracker from "./withTracker"; //Import withTracker page from code above
-
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Home from '../Pages/Home';
+import NotFound from '../Pages/NotFound';
+import withTracker from './withTracker'; //Import withTracker page from code above
 
 class Routes extends React.Component {
   render() {
