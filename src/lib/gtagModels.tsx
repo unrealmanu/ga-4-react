@@ -56,7 +56,11 @@ export interface GA4ReactStaticInterface {
  * @interface GA4ReactResolveInterface
  */
 export interface GA4ReactResolveInterface {
-  pageview(path: string): any;
+  pageview(
+    path: string | Location,
+    location?: string | Location,
+    title?: string
+  ): any;
   event(
     action: gtagAction,
     label: gtagLabel,
