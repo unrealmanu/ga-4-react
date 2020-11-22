@@ -8,10 +8,13 @@ import {
   gtagLabel,
 } from './gtagModels';
 
+addexport const GA4ReactGlobalIndex = '__ga4React__';
+
 declare global {
   interface Window {
     gtag: gtagFunction | Function;
-    ga: Function;
+    ga?: Function;
+    __ga4React__: GA4ReactResolveInterface;
   }
 }
 
@@ -27,9 +30,11 @@ export class GA4React implements GA4ReactInterface {
   ) {
     this.config = config || {};
     this.gaCode = gaCode;
-    this.initialiedCorrectly = undefined;
   }
 
+  /**
+   * @desc output on resolve initialization
+   */
   private outputOnResolve(): GA4ReactResolveInterface {
     return {
       pageview: this.pageview,
@@ -44,6 +49,10 @@ export class GA4React implements GA4ReactInterface {
    */
   public initialize(): Promise<GA4ReactResolveInterface> {
     return new Promise((resolve, reject) => {
+      if (GA4React.isInitialized()) {
+        reject(new Error('GA4React is being initialized'));
+      }
+
       const head: HTMLHeadElement = document.getElementsByTagName('head')[0];
       const scriptAsync: HTMLScriptElement = document.createElement('script');
       scriptAsync.setAttribute('async', '');
@@ -75,11 +84,14 @@ export class GA4React implements GA4ReactInterface {
         if (window.ga) {
           Object.assign(resolved, { ga: this.ga });
         }
+
+        Object.assign(window, { [GA4ReactGlobalIndex]: resolved });
+
         resolve(resolved);
       };
 
-      scriptAsync.onerror = (err: any) => {
-        reject(err);
+      scriptAsync.onerror = () => {
+        reject(new Error('GA4React initialization failed'));
       };
 
       head.appendChild(scriptAsync);
@@ -90,11 +102,15 @@ export class GA4React implements GA4ReactInterface {
    * @desc send pageview event to gtag
    * @param path
    */
-  public pageview(path: string): any {
+  public pageview(
+    path: string | Location,
+    location?: string | Location,
+    title?: string
+  ): any {
     return this.gtag('event', 'page_view', {
       page_path: path,
-      page_location: window.location,
-      page_title: document.title,
+      page_location: location || window.location,
+      page_title: title || document.title,
     });
   }
 
@@ -140,11 +156,22 @@ export class GA4React implements GA4ReactInterface {
    * @desc ga is initialized?
    */
   static isInitialized(): boolean {
-    switch (typeof window.gtag === 'function') {
+    switch (typeof window[GA4ReactGlobalIndex] !== 'undefined') {
       case true:
         return true;
       default:
         return false;
+    }
+  }
+
+  /**
+   * @desc get ga4react from global
+   */
+  static getGA4React(): GA4ReactResolveInterface | void {
+    if (GA4React.isInitialized()) {
+      return window[GA4ReactGlobalIndex];
+    } else {
+      console.error(new Error('GA4React is not initialized'));
     }
   }
 }

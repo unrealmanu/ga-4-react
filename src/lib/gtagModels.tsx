@@ -1,3 +1,5 @@
+import GA4React from './ga4manager';
+
 export type gtagEvent = 'event' | string;
 export type gtagAction = 'page_view' | string;
 export type gtagCategory = 'ecommerce' | 'engagement' | string;
@@ -41,6 +43,12 @@ export type gtagFunction = (
  */
 export interface GA4ReactInterface extends GA4ReactResolveInterface {
   initialize(): Promise<any>;
+}
+
+export interface GA4ReactStaticInterface {
+  new (): GA4React;
+  isInitialized(): boolean;
+  getGA4React(): GA4ReactResolveInterface | void;
 }
 
 /**

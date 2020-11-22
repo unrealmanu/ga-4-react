@@ -23,32 +23,37 @@ export const GA4R: React.FC<IGA4R> = ({
   const [components, setComponents] = useState<any>(null);
 
   useEffect(() => {
-    const ga4manager = new GA4React(`${code}`, config, additionalCode);
-    ga4manager.initialize().then(
-      (ga4: GA4ReactResolveInterface) => {
-        setComponents(
-          React.Children.map(children, (child: React.ReactChildren, index) => {
-            if (!React.isValidElement(child)) {
-              return <React.Fragment>{child}</React.Fragment>;
-            } else {
-              //@ts-ignore
-              if (child.type && typeof child.type.name !== 'undefined') {
-                return React.cloneElement(child, {
+    if (!GA4React.isInitialized()) {
+      const ga4manager = new GA4React(`${code}`, config, additionalCode);
+      ga4manager.initialize().then(
+        (ga4: GA4ReactResolveInterface) => {
+          setComponents(
+            React.Children.map(
+              children,
+              (child: React.ReactChildren, index) => {
+                if (!React.isValidElement(child)) {
+                  return <React.Fragment>{child}</React.Fragment>;
+                } else {
                   //@ts-ignore
-                  ga4: ga4,
-                  index,
-                });
-              } else {
-                return child;
+                  if (child.type && typeof child.type.name !== 'undefined') {
+                    return React.cloneElement(child, {
+                      //@ts-ignore
+                      ga4: ga4,
+                      index,
+                    });
+                  } else {
+                    return child;
+                  }
+                }
               }
-            }
-          })
-        );
-      },
-      err => {
-        console.error(err);
-      }
-    );
+            )
+          );
+        },
+        err => {
+          console.error(err);
+        }
+      );
+    }
   }, []);
 
   return <>{components}</>;
