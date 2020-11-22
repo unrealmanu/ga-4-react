@@ -8,7 +8,7 @@ import {
   gtagLabel,
 } from './gtagModels';
 
-addexport const GA4ReactGlobalIndex = '__ga4React__';
+export const GA4ReactGlobalIndex = '__ga4React__';
 
 declare global {
   interface Window {
