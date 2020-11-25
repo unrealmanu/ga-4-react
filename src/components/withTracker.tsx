@@ -9,7 +9,7 @@ export interface GA4WithTrackerComponentInterface {
   gaCode?: string;
 }
 
-export default function withTracker(
+export function withTracker(
   MyComponent: React.FC<any>
 ): React.FC<GA4WithTrackerComponentInterface> {
   return (props: GA4WithTrackerComponentInterface & any) => {
@@ -39,3 +39,5 @@ export default function withTracker(
     return <MyComponent {...props} />;
   };
 }
+
+export default withTracker;
