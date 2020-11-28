@@ -17,6 +17,8 @@ export const useGA4React = (
           console.error(err);
         }
       );
+    } else {
+      setGA4(GA4React.getGA4React());
     }
   });
   return ga4;
