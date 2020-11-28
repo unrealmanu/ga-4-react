@@ -96,7 +96,7 @@ export class GA4React implements GA4ReactInterface {
 
       document.onreadystatechange = function() {
         switch (document.readyState) {
-          case 'complete':
+          case 'interactive':
             head.appendChild(scriptAsync);
             break;
         }
