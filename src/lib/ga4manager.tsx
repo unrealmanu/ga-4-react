@@ -94,7 +94,13 @@ export class GA4React implements GA4ReactInterface {
         reject(new Error('GA4React initialization failed'));
       };
 
-      head.appendChild(scriptAsync);
+      document.onreadystatechange = function() {
+        switch (document.readyState) {
+          case 'interactive':
+            head.appendChild(scriptAsync);
+            break;
+        }
+      };
     });
   }
 
