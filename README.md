@@ -12,7 +12,7 @@ Example without components
 const ga4react = new GA4React('YOUR GA CODE');
 ga4react.initialize().then((ga4) => {
   ga4.pageview('path')
-  ga4.gtag('event','pageview','path') // or your custiom gtag event
+  ga4.gtag('event','pageview','path') // or your custom gtag event
 },(err) => {
   console.error(err)
 })
