@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import GA4React from '..';
+import GA4React from '../lib/ga4manager';
+
 import { ga4Config, GA4ReactResolveInterface } from '../lib/gtagModels';
 
 export interface GA4WithTrackerComponentInterface {
