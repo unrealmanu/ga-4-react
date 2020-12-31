@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import GA4React from '..';
-import { GA4ReactResolveInterface } from '../lib/gtagModels';
+import { ga4Config, GA4ReactResolveInterface } from '../lib/gtagModels';
 
 export interface GA4WithTrackerComponentInterface {
   path: string | Location;
   location?: string | Location;
   title?: string;
   gaCode?: string;
-  gaConfig?: string;
-  additionalCode?: Array<any>;
+  gaConfig?: ga4Config | object;
+  additionalCode?: Array<string>;
   timeout?: number;
 }
 
@@ -21,9 +21,9 @@ export function withTracker(
       location,
       title,
       gaCode,
-      timeout,
+      gaTimeout,
       gaConfig,
-      additionalCode,
+      gaAdditionalCode,
     } = props;
     useEffect(() => {
       switch (GA4React.isInitialized()) {
@@ -38,8 +38,8 @@ export function withTracker(
           const ga4react = new GA4React(
             `${gaCode}`,
             gaConfig,
-            additionalCode,
-            timeout
+            gaAdditionalCode,
+            gaTimeout
           );
           ga4react.initialize().then(
             (ga4: GA4ReactResolveInterface) => {

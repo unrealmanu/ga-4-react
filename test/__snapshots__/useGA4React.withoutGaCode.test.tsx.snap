@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GA4R hook Rendering with useGa4React without gaCode 1`] = `""`;
+
+exports[`GA4R hook Rendering with useGa4React without gaCode 2`] = `
+<head>
+  <script
+    async=""
+    src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
+  />
+  <script
+    id="ga4ReactScriptSync"
+  >
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);};
+        gtag('js', new Date());
+        gtag('config', 'GA-CODE', {});
+  </script>
+</head>
+`;
