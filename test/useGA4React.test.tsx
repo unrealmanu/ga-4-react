@@ -13,7 +13,7 @@ beforeAll(() => {
   global.document.head.innerHTML = '';
 });
 
-const Example = () => {
+const Example: React.FC = () => {
   const ga4React = useGA4React('GA-CODE');
   return <>{JSON.stringify(ga4React)}</>;
 };
