@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { GA4R } from './../src/index';
+import { withTracker } from '../src/index';
 
 Object.defineProperty(global.document, 'readyState', {
   get() {
@@ -13,17 +13,12 @@ beforeAll(() => {
   global.document.head.innerHTML = '';
 });
 
-describe('GA4R Components', () => {
-  it('Rendering with Children', async done => {
-    const Test: React.FC<any> = ({ ga4 }) => {
-      return <>{JSON.stringify(ga4)}</>;
-    };
+const Tracker = withTracker(props => <>{JSON.stringify(props)}</>);
 
+describe('GA4R withTracker', () => {
+  it('Rendering', async done => {
     const { container } = render(
-      <GA4R code="GA-CODE">
-        <Test></Test>
-        <div>Try</div>
-      </GA4R>
+      <Tracker path="myCustomPath" gaCode="GA-CODE"></Tracker>
     );
 
     setTimeout(() => {
@@ -46,33 +41,10 @@ describe('GA4R Components', () => {
     }, 2000);
   });
 
-  it('Rendering with invalid Children', async done => {
+  it('Rendering, after GA4React initialization', async done => {
     const { container } = render(
-      <GA4R code="GA-CODE">im not valid children element</GA4R>
+      <Tracker path="myCustomPath" gaCode="GA-CODE"></Tracker>
     );
-
-    setTimeout(() => {
-      global.document.dispatchEvent(new Event('readystatechange'));
-    }, 100);
-
-    setTimeout(() => {
-      const LoadEvent = document.createEvent('HTMLEvents');
-      LoadEvent.initEvent('load', true, true);
-      const target = global.document.head.querySelector('script');
-      if (target) {
-        target.dispatchEvent(LoadEvent);
-      }
-    }, 1000);
-
-    setTimeout(() => {
-      expect(container.innerHTML).toMatchSnapshot();
-      expect(global.document.head).toMatchSnapshot();
-      done();
-    }, 2000);
-  });
-
-  it('Rendering without Children', async done => {
-    const { container } = render(<GA4R code="GA-CODE"></GA4R>);
 
     setTimeout(() => {
       global.document.dispatchEvent(new Event('readystatechange'));

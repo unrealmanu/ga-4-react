@@ -1,3 +1,58 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GA4R Components render 1`] = `"{\\"test\\":\\"test\\"}<div>Try</div>"`;
+exports[`GA4R Components Rendering with Children 1`] = `"{}<div>Try</div>"`;
+
+exports[`GA4R Components Rendering with Children 2`] = `
+<head>
+  <script
+    async=""
+    src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
+  />
+  <script
+    id="ga4ReactScriptSync"
+  >
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);};
+        gtag('js', new Date());
+        gtag('config', 'GA-CODE', {});
+  </script>
+</head>
+`;
+
+exports[`GA4R Components Rendering with invalid Children 1`] = `"im not valid children element"`;
+
+exports[`GA4R Components Rendering with invalid Children 2`] = `
+<head>
+  <script
+    async=""
+    src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
+  />
+  <script
+    id="ga4ReactScriptSync"
+  >
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);};
+        gtag('js', new Date());
+        gtag('config', 'GA-CODE', {});
+  </script>
+</head>
+`;
+
+exports[`GA4R Components Rendering without Children 1`] = `""`;
+
+exports[`GA4R Components Rendering without Children 2`] = `
+<head>
+  <script
+    async=""
+    src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
+  />
+  <script
+    id="ga4ReactScriptSync"
+  >
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);};
+        gtag('js', new Date());
+        gtag('config', 'GA-CODE', {});
+  </script>
+</head>
+`;

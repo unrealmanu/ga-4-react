@@ -9,6 +9,7 @@ export interface IGAReactConfig {
 
 export interface IGA4R {
   code: string;
+  timeout?: number;
   config?: IGAReactConfig;
   additionalCode?: Array<string>;
   children?: any;
@@ -23,17 +24,17 @@ const outputGA4 = (
     React.Children.map(children, (child: React.ReactChildren, index) => {
       if (!React.isValidElement(child)) {
         return <React.Fragment>{child}</React.Fragment>;
+      }
+
+      //@ts-ignore
+      if (child.type && typeof child.type.name !== 'undefined') {
+        return React.cloneElement(child, {
+          //@ts-ignore
+          ga4: ga4,
+          index,
+        });
       } else {
-        //@ts-ignore
-        if (child.type && typeof child.type.name !== 'undefined') {
-          return React.cloneElement(child, {
-            //@ts-ignore
-            ga4: ga4,
-            index,
-          });
-        } else {
-          return child;
-        }
+        return child;
       }
     })
   );
@@ -41,6 +42,7 @@ const outputGA4 = (
 
 export const GA4R: React.FC<IGA4R> = ({
   code,
+  timeout,
   config,
   additionalCode,
   children,
@@ -49,7 +51,12 @@ export const GA4R: React.FC<IGA4R> = ({
 
   useEffect(() => {
     if (!GA4React.isInitialized()) {
-      const ga4manager = new GA4React(`${code}`, config, additionalCode);
+      const ga4manager = new GA4React(
+        `${code}`,
+        config,
+        additionalCode,
+        timeout
+      );
       ga4manager.initialize().then(
         (ga4: GA4ReactResolveInterface) => {
           outputGA4(children, setComponents, ga4);

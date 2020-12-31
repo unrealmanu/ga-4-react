@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GA4R withTracker Rendering 1`] = `"{\\"path\\":\\"myCustomPath\\",\\"gaCode\\":\\"GA-CODE\\"}"`;
+
+exports[`GA4R withTracker Rendering 2`] = `
+<head>
+  <script
+    async=""
+    src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
+  />
+  <script
+    id="ga4ReactScriptSync"
+  >
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);};
+        gtag('js', new Date());
+        gtag('config', 'GA-CODE', {});
+  </script>
+</head>
+`;
+
+exports[`GA4R withTracker Rendering, after GA4React initialization 1`] = `"{\\"path\\":\\"myCustomPath\\",\\"gaCode\\":\\"GA-CODE\\"}"`;
+
+exports[`GA4R withTracker Rendering, after GA4React initialization 2`] = `
+<head>
+  <script
+    async=""
+    src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
+  />
+  <script
+    id="ga4ReactScriptSync"
+  >
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);};
+        gtag('js', new Date());
+        gtag('config', 'GA-CODE', {});
+  </script>
+</head>
+`;

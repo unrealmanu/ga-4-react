@@ -23,13 +23,17 @@ declare global {
  * @class GA4React
  *  */
 export class GA4React implements GA4ReactInterface {
+  private scriptSyncId: string = 'ga4ReactScriptSync';
   constructor(
     private gaCode: string,
     private config?: ga4Config | object,
-    private additionalGaCode?: Array<string>
+    private additionalGaCode?: Array<string>,
+    private timeout?: number
   ) {
     this.config = config || {};
     this.gaCode = gaCode;
+    this.timeout = timeout || 5000;
+    this.additionalGaCode = additionalGaCode;
   }
 
   /**
@@ -61,17 +65,27 @@ export class GA4React implements GA4ReactInterface {
         `https://www.googletagmanager.com/gtag/js?id=${this.gaCode}`
       );
       scriptAsync.onload = () => {
+        const target: HTMLElement | null = document.getElementById(
+          this.scriptSyncId
+        );
+        if (target) {
+          target.remove();
+        }
+
         const scriptSync: HTMLScriptElement = document.createElement('script');
 
-        let scriptHTML: string = `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${this.gaCode}', ${JSON.stringify(this.config)});`;
+        scriptSync.setAttribute('id', this.scriptSyncId);
+
+        let scriptHTML: string = `window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);};
+        gtag('js', new Date());
+        gtag('config', '${this.gaCode}', ${JSON.stringify(this.config)});`;
 
         if (this.additionalGaCode) {
           this.additionalGaCode.forEach((code: string) => {
-            scriptHTML += `gtag('config', '${code}');`;
+            scriptHTML += `gtag('config', '${code}', ${JSON.stringify(
+              this.config
+            )});`;
           });
         }
 
@@ -94,13 +108,26 @@ export class GA4React implements GA4ReactInterface {
         reject(new Error('GA4React initialization failed'));
       };
 
-      document.onreadystatechange = function() {
+      const onChangeReadyState = () => {
         switch (document.readyState) {
           case 'interactive':
-            head.appendChild(scriptAsync);
+          case 'complete':
+            if (!GA4React.isInitialized()) {
+              head.appendChild(scriptAsync);
+              document.removeEventListener(
+                'readystatechange',
+                onChangeReadyState
+              );
+            }
             break;
         }
       };
+
+      document.addEventListener('readystatechange', onChangeReadyState);
+
+      setTimeout(() => {
+        reject(new Error('GA4React Timeout'));
+      }, this.timeout);
     });
   }
 

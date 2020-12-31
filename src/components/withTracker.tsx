@@ -7,13 +7,24 @@ export interface GA4WithTrackerComponentInterface {
   location?: string | Location;
   title?: string;
   gaCode?: string;
+  gaConfig?: string;
+  additionalCode?: Array<any>;
+  timeout?: number;
 }
 
 export function withTracker(
   MyComponent: React.FC<any>
 ): React.FC<GA4WithTrackerComponentInterface> {
   return (props: GA4WithTrackerComponentInterface & any) => {
-    const { path, location, title, gaCode } = props;
+    const {
+      path,
+      location,
+      title,
+      gaCode,
+      timeout,
+      gaConfig,
+      additionalCode,
+    } = props;
     useEffect(() => {
       switch (GA4React.isInitialized()) {
         case true:
@@ -24,7 +35,12 @@ export function withTracker(
           break;
         default:
         case false:
-          const ga4react = new GA4React(gaCode);
+          const ga4react = new GA4React(
+            `${gaCode}`,
+            gaConfig,
+            additionalCode,
+            timeout
+          );
           ga4react.initialize().then(
             (ga4: GA4ReactResolveInterface) => {
               ga4.pageview(path, location, title);
