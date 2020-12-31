@@ -1,17 +1,11 @@
-import { GA4React as GA4ReactManager } from './lib/ga4manager';
+import { GA4React } from './lib/ga4manager';
 
-import { GA4R as GA4RComponents } from './components/GA4RComponents';
+import { GA4R } from './components/GA4RComponents';
 
-import { useGA4React as useGA4ReactHook } from './hooks/useGA4React';
+import { useGA4React } from './hooks/useGA4React';
 
-import { withTracker as withTrackerFunction } from './components/withTracker';
+import { withTracker } from './components/withTracker';
 
-export const GA4React = GA4ReactManager;
+export { GA4React, GA4R, useGA4React, withTracker };
 
-export const GA4R = GA4RComponents;
-
-export const useGA4React = useGA4ReactHook;
-
-export const withTracker = withTrackerFunction;
-
-export default GA4ReactManager;
+export default GA4React;
