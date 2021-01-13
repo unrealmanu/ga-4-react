@@ -29,11 +29,22 @@ describe('GA4R hook', () => {
     setTimeout(() => {
       const LoadEvent = document.createEvent('HTMLEvents');
       LoadEvent.initEvent('load', true, true);
-      const target = global.document.head.querySelector('script');
-      if (target) {
-        target.dispatchEvent(LoadEvent);
+      const targets = global.document.head.querySelectorAll('script');
+      if (targets) {
+        targets.forEach(target => target.dispatchEvent(LoadEvent));
       }
     }, 1000);
+
+    setTimeout(() => {
+      const LoadEvent = document.createEvent('HTMLEvents');
+      LoadEvent.initEvent('load', true, true);
+      const targets = global.document.head.querySelectorAll(
+        '[id="ga4ReactScriptSync"]'
+      );
+      if (targets) {
+        targets.forEach(target => target.dispatchEvent(LoadEvent));
+      }
+    }, 1500);
 
     setTimeout(() => {
       expect(container.innerHTML).toMatchSnapshot();
@@ -52,11 +63,22 @@ describe('GA4R hook', () => {
     setTimeout(() => {
       const LoadEvent = document.createEvent('HTMLEvents');
       LoadEvent.initEvent('load', true, true);
-      const target = global.document.head.querySelector('script');
-      if (target) {
-        target.dispatchEvent(LoadEvent);
+      const targets = global.document.head.querySelectorAll('script');
+      if (targets) {
+        targets.forEach(target => target.dispatchEvent(LoadEvent));
       }
     }, 1000);
+
+    setTimeout(() => {
+      const LoadEvent = document.createEvent('HTMLEvents');
+      LoadEvent.initEvent('load', true, true);
+      const targets = global.document.head.querySelectorAll(
+        '[id="ga4ReactScriptSync"]'
+      );
+      if (targets) {
+        targets.forEach(target => target.dispatchEvent(LoadEvent));
+      }
+    }, 1500);
 
     setTimeout(() => {
       expect(container.innerHTML).toMatchSnapshot();
