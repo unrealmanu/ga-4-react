@@ -6,6 +6,7 @@ exports[`GA4R Components Rendering without Children, and with very shortest time
 <head>
   <script
     async=""
+    id="ga4ReactScriptAsync"
     src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
   />
   <script

@@ -6,6 +6,7 @@ exports[`GA4R withTracker Rendering 2`] = `
 <head>
   <script
     async=""
+    id="ga4ReactScriptAsync"
     src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
   />
   <script
@@ -25,6 +26,7 @@ exports[`GA4R withTracker Rendering, after GA4React initialization 2`] = `
 <head>
   <script
     async=""
+    id="ga4ReactScriptAsync"
     src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
   />
   <script
