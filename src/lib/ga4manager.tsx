@@ -104,8 +104,12 @@ export class GA4React implements GA4ReactInterface {
         resolve(resolved);
       };
 
-      scriptAsync.onerror = () => {
-        reject(new Error('GA4React initialization failed'));
+      scriptAsync.onerror = (event: Event | string): void => {
+        if (typeof event === 'string') {
+          reject(`GA4React intialization failed ${event}`);
+        } else {
+          reject(event);
+        }
       };
 
       const onChangeReadyState = () => {
