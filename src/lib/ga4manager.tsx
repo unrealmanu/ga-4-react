@@ -68,6 +68,7 @@ export class GA4React implements GA4ReactInterface {
       const scriptAsync: HTMLScriptElement = document.createElement('script');
       scriptAsync.setAttribute('id', this.scriptAsyncId);
       scriptAsync.setAttribute('async', '');
+      scriptAsync.setAttribute('crossorigin', 'anonymous');
       scriptAsync.setAttribute(
         'src',
         `https://www.googletagmanager.com/gtag/js?id=${this.gaCode}`
@@ -124,7 +125,12 @@ export class GA4React implements GA4ReactInterface {
         } else {
           const error = new Error();
           error.name = 'GA4React intialization failed';
-          error.message = JSON.stringify(event);
+          error.message = JSON.stringify(event, [
+            'message',
+            'arguments',
+            'type',
+            'name',
+          ]);
           reject(error);
         }
       };
