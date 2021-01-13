@@ -13,7 +13,6 @@ export const GA4ReactGlobalIndex = '__ga4React__';
 declare global {
   interface Window {
     gtag: gtagFunction | Function;
-    ga?: Function;
     __ga4React__: GA4ReactResolveInterface;
   }
 }
@@ -68,7 +67,6 @@ export class GA4React implements GA4ReactInterface {
       const scriptAsync: HTMLScriptElement = document.createElement('script');
       scriptAsync.setAttribute('id', this.scriptAsyncId);
       scriptAsync.setAttribute('async', '');
-      scriptAsync.setAttribute('crossorigin', 'anonymous');
       scriptAsync.setAttribute(
         'src',
         `https://www.googletagmanager.com/gtag/js?id=${this.gaCode}`
@@ -98,7 +96,7 @@ export class GA4React implements GA4ReactInterface {
 
         if (this.additionalGaCode) {
           this.additionalGaCode.forEach((code: string) => {
-            scriptHTML += `gtag('config', '${code}', ${JSON.stringify(
+            scriptHTML += `\ngtag('config', '${code}', ${JSON.stringify(
               this.config
             )});`;
           });
@@ -109,10 +107,6 @@ export class GA4React implements GA4ReactInterface {
         head.appendChild(scriptSync);
 
         const resolved: GA4ReactResolveInterface = this.outputOnResolve();
-
-        if (window.ga) {
-          Object.assign(resolved, { ga: this.ga });
-        }
 
         Object.assign(window, { [GA4ReactGlobalIndex]: resolved });
 
@@ -192,15 +186,6 @@ export class GA4React implements GA4ReactInterface {
       event_category: category,
       non_interaction: nonInteraction,
     });
-  }
-
-  /**
-   * @desc direct access to ga
-   * @param args
-   */
-  public ga(...args: any): any {
-    //@ts-ignore
-    return window.ga(...args);
   }
 
   /**
