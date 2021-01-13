@@ -24,6 +24,7 @@ declare global {
  *  */
 export class GA4React implements GA4ReactInterface {
   private scriptSyncId: string = 'ga4ReactScriptSync';
+  private scriptAsyncId: string = 'ga4ReactScriptAsync';
   constructor(
     private gaCode: string,
     private config?: ga4Config | object,
@@ -57,8 +58,15 @@ export class GA4React implements GA4ReactInterface {
         reject(new Error('GA4React is being initialized'));
       }
 
+      // in case of retry logics, remove previous scripts
+      const previousScriptAsync = document.getElementById(this.scriptAsyncId);
+      if (previousScriptAsync) {
+        previousScriptAsync.remove();
+      }
+
       const head: HTMLHeadElement = document.getElementsByTagName('head')[0];
       const scriptAsync: HTMLScriptElement = document.createElement('script');
+      scriptAsync.setAttribute('id', this.scriptAsyncId);
       scriptAsync.setAttribute('async', '');
       scriptAsync.setAttribute(
         'src',
@@ -70,6 +78,12 @@ export class GA4React implements GA4ReactInterface {
         );
         if (target) {
           target.remove();
+        }
+
+        // in case of retry logics, remove previous script sync
+        const previousScriptSync = document.getElementById(this.scriptSyncId);
+        if (previousScriptSync) {
+          previousScriptSync.remove();
         }
 
         const scriptSync: HTMLScriptElement = document.createElement('script');
