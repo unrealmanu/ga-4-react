@@ -42,7 +42,7 @@ export type gtagFunction = (
  * @interface GA4ReactInterface
  */
 export interface GA4ReactInterface extends GA4ReactResolveInterface {
-  initialize(): Promise<any>;
+  initialize(): Promise<GA4ReactResolveInterface>;
 }
 
 export interface GA4ReactStaticInterface {

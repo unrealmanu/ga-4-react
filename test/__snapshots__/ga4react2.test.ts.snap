@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ga4react initialized 1`] = `
+Object {
+  "event": [Function],
+  "gtag": [Function],
+  "pageview": [Function],
+}
+`;
