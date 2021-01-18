@@ -7,11 +7,12 @@ exports[`GA4R Components Rendering with Children 2`] = `
   <script
     async=""
     id="ga4ReactScriptAsync"
+    nonce="nonce-string0"
     src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
   />
   <script
     id="ga4ReactScriptSync"
-    nonce="nonce-string"
+    nonce="nonce-string1"
   >
     window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);};
@@ -28,11 +29,12 @@ exports[`GA4R Components Rendering with invalid Children 2`] = `
   <script
     async=""
     id="ga4ReactScriptAsync"
+    nonce="nonce-string0"
     src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
   />
   <script
     id="ga4ReactScriptSync"
-    nonce="nonce-string"
+    nonce="nonce-string1"
   >
     window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);};
@@ -49,11 +51,12 @@ exports[`GA4R Components Rendering without Children 2`] = `
   <script
     async=""
     id="ga4ReactScriptAsync"
+    nonce="nonce-string0"
     src="https://www.googletagmanager.com/gtag/js?id=GA-CODE"
   />
   <script
     id="ga4ReactScriptSync"
-    nonce="nonce-string"
+    nonce="nonce-string1"
   >
     window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);};
