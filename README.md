@@ -13,7 +13,9 @@ const ga4react = new GA4React(
 'YOUR GA CODE',
 { /* ga custom config, optional */ },
 [ /* additional code, optional */ ],
-5000 /* timeout, optional, defaults is 5000 */
+5000 /* timeout, optional, defaults is 5000 */,
+options /* { nonce: 'my-custom-code' } */
+
 });
 ga4react.initialize().then((ga4) => {
   ga4.pageview('path')
