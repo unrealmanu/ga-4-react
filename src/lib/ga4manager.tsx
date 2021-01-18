@@ -75,6 +75,15 @@ export class GA4React implements GA4ReactInterface {
       const scriptAsync: HTMLScriptElement = document.createElement('script');
       scriptAsync.setAttribute('id', this.scriptAsyncId);
       scriptAsync.setAttribute('async', '');
+
+      if (
+        this.nonce &&
+        typeof this.nonce === 'string' &&
+        this.nonce.length > 0
+      ) {
+        scriptAsync.setAttribute('nonce', this.nonce);
+      }
+
       scriptAsync.setAttribute(
         'src',
         `https://www.googletagmanager.com/gtag/js?id=${this.gaCode}`
