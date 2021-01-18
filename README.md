@@ -14,7 +14,7 @@ const ga4react = new GA4React(
 { /* ga custom config, optional */ },
 [ /* additional code, optional */ ],
 5000 /* timeout, optional, defaults is 5000 */,
-options /* { nonce: 'my-custom-code' } */
+options /* { nonce: ['first-script-is-async','second-script'] } */
 
 });
 ga4react.initialize().then((ga4) => {

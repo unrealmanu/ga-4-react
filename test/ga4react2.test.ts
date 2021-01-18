@@ -1,4 +1,4 @@
-import { GA4ReactInterface } from '../dist/lib/gtagModels';
+import { GA4ReactInterface } from '../dist/models/gtagModels';
 import GA4React from '../dist/index';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -10,7 +10,7 @@ describe('ga4react', () => {
       undefined,
       5000,
       {
-        nonce: 'custom-nonce',
+        nonce: ['custom-nonce0', 'custom-nonce1'],
       }
     );
     const ga4promise = ga4react.initialize().then(

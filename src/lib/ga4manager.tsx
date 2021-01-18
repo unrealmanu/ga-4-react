@@ -25,7 +25,8 @@ declare global {
 export class GA4React implements GA4ReactInterface {
   private scriptSyncId: string = 'ga4ReactScriptSync';
   private scriptAsyncId: string = 'ga4ReactScriptAsync';
-  private nonce: string = '';
+  private nonceAsync: string = '';
+  private nonceSync: string = '';
   constructor(
     private gaCode: string,
     private gaConfig?: GA4Config,
@@ -40,7 +41,8 @@ export class GA4React implements GA4ReactInterface {
 
     if (this.options) {
       const { nonce } = this.options;
-      this.nonce = nonce || '';
+      this.nonceAsync = nonce && nonce[0] ? nonce[0] : '';
+      this.nonceSync = nonce && nonce[1] ? nonce[1] : '';
     }
   }
 
@@ -77,11 +79,11 @@ export class GA4React implements GA4ReactInterface {
       scriptAsync.setAttribute('async', '');
 
       if (
-        this.nonce &&
-        typeof this.nonce === 'string' &&
-        this.nonce.length > 0
+        this.nonceAsync &&
+        typeof this.nonceAsync === 'string' &&
+        this.nonceAsync.length > 0
       ) {
-        scriptAsync.setAttribute('nonce', this.nonce);
+        scriptAsync.setAttribute('nonce', this.nonceAsync);
       }
 
       scriptAsync.setAttribute(
@@ -107,11 +109,11 @@ export class GA4React implements GA4ReactInterface {
         scriptSync.setAttribute('id', this.scriptSyncId);
 
         if (
-          this.nonce &&
-          typeof this.nonce === 'string' &&
-          this.nonce.length > 0
+          this.nonceSync &&
+          typeof this.nonceSync === 'string' &&
+          this.nonceSync.length > 0
         ) {
-          scriptSync.setAttribute('nonce', this.nonce);
+          scriptSync.setAttribute('nonce', this.nonceSync);
         }
 
         let scriptHTML: string = `window.dataLayer = window.dataLayer || [];

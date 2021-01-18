@@ -85,5 +85,5 @@ export interface GA4Config {
  * @interface GA4ManagerOptionsInterface
  */
 export interface GA4ManagerOptionsInterface {
-  nonce?: string;
+  nonce?: Array<string>;
 }
