@@ -20,7 +20,7 @@ describe('GA4R Components', () => {
     };
 
     const { container } = render(
-      <GA4R code="GA-CODE">
+      <GA4R code="GA-CODE" options={{ nonce: 'nonce-string' }}>
         <Test></Test>
         <div>Try</div>
       </GA4R>

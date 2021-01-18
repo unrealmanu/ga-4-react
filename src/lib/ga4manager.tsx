@@ -1,12 +1,13 @@
 import {
-  ga4Config,
+  GA4Config,
+  GA4ManagerOptionsInterface,
   GA4ReactInterface,
   GA4ReactResolveInterface,
   gtagAction,
   gtagCategory,
   gtagFunction,
   gtagLabel,
-} from './gtagModels';
+} from '../models/gtagModels';
 
 export const GA4ReactGlobalIndex = '__ga4React__';
 
@@ -24,16 +25,23 @@ declare global {
 export class GA4React implements GA4ReactInterface {
   private scriptSyncId: string = 'ga4ReactScriptSync';
   private scriptAsyncId: string = 'ga4ReactScriptAsync';
+  private nonce: string = '';
   constructor(
     private gaCode: string,
-    private config?: ga4Config | object,
+    private gaConfig?: GA4Config,
     private additionalGaCode?: Array<string>,
-    private timeout?: number
+    private timeout?: number,
+    private options?: GA4ManagerOptionsInterface
   ) {
-    this.config = config || {};
+    this.gaConfig = gaConfig ? gaConfig : {};
     this.gaCode = gaCode;
     this.timeout = timeout || 5000;
     this.additionalGaCode = additionalGaCode;
+
+    if (this.options) {
+      const { nonce } = this.options;
+      this.nonce = nonce || '';
+    }
   }
 
   /**
@@ -89,15 +97,23 @@ export class GA4React implements GA4ReactInterface {
 
         scriptSync.setAttribute('id', this.scriptSyncId);
 
+        if (
+          this.nonce &&
+          typeof this.nonce === 'string' &&
+          this.nonce.length > 0
+        ) {
+          scriptSync.setAttribute('nonce', this.nonce);
+        }
+
         let scriptHTML: string = `window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);};
         gtag('js', new Date());
-        gtag('config', '${this.gaCode}', ${JSON.stringify(this.config)});`;
+        gtag('config', '${this.gaCode}', ${JSON.stringify(this.gaConfig)});`;
 
         if (this.additionalGaCode) {
           this.additionalGaCode.forEach((code: string) => {
             scriptHTML += `\ngtag('config', '${code}', ${JSON.stringify(
-              this.config
+              this.gaConfig
             )});`;
           });
         }

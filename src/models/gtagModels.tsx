@@ -1,4 +1,4 @@
-import GA4React from './ga4manager';
+import GA4React from '../lib/ga4manager';
 
 export type gtagEvent = 'event' | string;
 export type gtagAction = 'page_view' | string;
@@ -73,9 +73,17 @@ export interface GA4ReactResolveInterface {
 
 /**
  * @desc default accepted config
- * @interface ga4Config
+ * @interface GA4Config
  */
-export interface ga4Config {
-  send_page_view: boolean;
-  groups: string;
+export interface GA4Config {
+  send_page_view?: boolean;
+  groups?: string;
+}
+
+/**
+ * @desc options for confgure Ga4Manager during initialization
+ * @interface GA4ManagerOptionsInterface
+ */
+export interface GA4ManagerOptionsInterface {
+  nonce?: string;
 }

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import GA4React from './../lib/ga4manager';
-import { GA4ReactResolveInterface } from '../lib/gtagModels';
-
-export interface IGAReactConfig {
-  send_page_view: boolean;
-  groups: string;
-}
+import {
+  GA4Config,
+  GA4ManagerOptionsInterface,
+  GA4ReactResolveInterface,
+} from '../models/gtagModels';
 
 export interface IGA4R {
   code: string;
   timeout?: number;
-  config?: IGAReactConfig;
+  config?: GA4Config;
   additionalCode?: Array<string>;
   children?: any;
+  options?: GA4ManagerOptionsInterface;
 }
 
 const outputGA4 = (
@@ -46,6 +46,7 @@ export const GA4R: React.FC<IGA4R> = ({
   config,
   additionalCode,
   children,
+  options,
 }) => {
   const [components, setComponents] = useState<any>(null);
 
@@ -55,7 +56,8 @@ export const GA4R: React.FC<IGA4R> = ({
         `${code}`,
         config,
         additionalCode,
-        timeout
+        timeout,
+        options
       );
       ga4manager.initialize().then(
         (ga4: GA4ReactResolveInterface) => {

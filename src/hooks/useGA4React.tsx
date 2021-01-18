@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import GA4React from '../lib/ga4manager';
 
-import { ga4Config, GA4ReactResolveInterface } from '../lib/gtagModels';
+import { GA4Config, GA4ReactResolveInterface } from '../models/gtagModels';
 
 export const useGA4React = (
   gaCode?: string,
-  gaConfig?: ga4Config | object,
+  gaConfig?: GA4Config | object,
   gaAdditionalCode?: Array<string>,
   gaTimeout?: number
 ): GA4ReactResolveInterface | void => {
