@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
 import GA4React from '../lib/ga4manager';
 
-import { GA4Config, GA4ReactResolveInterface } from '../models/gtagModels';
+import {
+  GA4Config,
+  GA4ManagerOptionsInterface,
+  GA4ReactResolveInterface,
+} from '../models/gtagModels';
 
 export const useGA4React = (
   gaCode?: string,
   gaConfig?: GA4Config | object,
   gaAdditionalCode?: Array<string>,
-  gaTimeout?: number
+  gaTimeout?: number,
+  options?: GA4ManagerOptionsInterface
 ): GA4ReactResolveInterface | void => {
   const [ga4, setGA4] = useState<GA4ReactResolveInterface | void>(undefined);
   useEffect(() => {
@@ -18,7 +23,8 @@ export const useGA4React = (
             `${gaCode}`,
             gaConfig,
             gaAdditionalCode,
-            gaTimeout
+            gaTimeout,
+            options
           );
           ga4react.initialize().then(
             (ga4: GA4ReactResolveInterface) => {
