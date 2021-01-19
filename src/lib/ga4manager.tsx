@@ -38,6 +38,7 @@ export class GA4React implements GA4ReactInterface {
     this.gaCode = gaCode;
     this.timeout = timeout || 5000;
     this.additionalGaCode = additionalGaCode;
+    this.options = options;
 
     if (this.options) {
       const { nonce } = this.options;
