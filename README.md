@@ -7,7 +7,7 @@ https://developers.google.com/analytics/devguides/collection/ga4
 
 Example without components
 
-```
+```javascript
 
 const ga4react = new GA4React(
 'YOUR GA CODE',
@@ -32,7 +32,7 @@ ga4react.initialize().then((ga4) => {
 
 Example with custom components 'GA4R'
 
-```
+```typescript
 const Test: React.FC<any> = ({ ga4 }) => {
   return <>{ga4 && console.log(ga4)}</>;
 };
@@ -53,9 +53,9 @@ console.log results:
 
 ## Components withTracker
 
-path prop value is sended with pageview
+Pass pageview data to the `path` prop:
 
-```
+```javascript
 const Tracker = withTracker(props => <>{JSON.stringify(props)}</>);
 ...
  <Tracker path="myCustomPath" gaCode="GA-CODE"></Tracker>
@@ -66,7 +66,7 @@ const Tracker = withTracker(props => <>{JSON.stringify(props)}</>);
 
 ## useGA4React Hook
 
-```
+```javascript
 const Example = () => {
   const ga4React = useGA4React(); // GA CODE, optional, if empty try to get from globals
   return <>{JSON.stringify(ga4React)}</>;
