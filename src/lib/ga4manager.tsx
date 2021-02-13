@@ -172,7 +172,11 @@ export class GA4React implements GA4ReactInterface {
         }
       };
 
-      document.addEventListener('readystatechange', onChangeReadyState);
+      if (document.readyState !== 'complete') {
+        document.addEventListener('readystatechange', onChangeReadyState);
+      } else {
+        onChangeReadyState();
+      }
 
       setTimeout(() => {
         reject(new Error('GA4React Timeout'));
