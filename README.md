@@ -74,6 +74,35 @@ const Example = () => {
 
 ```
 
+___
+## "Manual start"
+
+```javascript
+import React from "react";
+import ReactDOM from "react-dom";
+import GA4React, { useGA4React } from "ga-4-react";
+
+const ga4react = new GA4React("G-1JXXXXX");
+
+function MyApp() {
+  const ga = useGA4React();
+  console.log(ga);
+
+  return <div className="App">hi!</div>;
+}
+
+(async () => {
+  await ga4react.initialize();
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <MyApp />
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
+})();
+```
+
 ---
 
 <a href="https://www.buymeacoffee.com/unrealmanu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
