@@ -52,7 +52,7 @@ export interface GA4ReactStaticInterface {
 }
 
 /**
- * @desc on resolve GA4React initial promises, return functino in this interface
+ * @desc on resolve GA4React initial promises, return function in this interface
  * @interface GA4ReactResolveInterface
  */
 export interface GA4ReactResolveInterface {
